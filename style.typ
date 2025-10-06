@@ -1,5 +1,6 @@
 #let style(body) = [
   #set text(font: "Open Sans")
+  #show math.equation: set text(size: 16pt)
   #set terms(separator: [: ])
   #set page(
     footer: context [

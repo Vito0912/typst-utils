@@ -1,0 +1,3 @@
+[submodule "custom/typki"]
+	path = custom/typki
+	url = https://codeberg.org/JL710/typki.git
