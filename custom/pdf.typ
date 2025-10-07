@@ -1,6 +1,6 @@
 #import "@preview/muchpdf:0.1.1": muchpdf
 
-#let doc-pdf(data, pages, ..args) = {
+#let doc-pdf(data, pages, scale: 1, cite-label: none, ..args) = {
   let parse-pages(spec) = {
     let result = ()
 
@@ -13,10 +13,10 @@
         let end = int(range-parts.at(1).trim())
 
         for page in range(start, end + 1) {
-          result.push(page)
+          result.push(page - 1)
         }
       } else {
-        result.push(int(part))
+        result.push(int(part) - 1)
       }
     }
 
@@ -28,11 +28,18 @@
   if (args.pos().len() > 0) {
     for value in args.pos() {
       parsed-pages = parsed-pages.rev()
-      muchpdf(data, pages: parsed-pages.pop())
+      let page = parsed-pages.pop()
+      muchpdf(data, pages: page, scale: scale)
+      if cite-label != none {
+        cite(cite-label, supplement: "p." + page)
+      }
       parsed-pages = parsed-pages.rev()
       [#value]
     }
   }
 
-  muchpdf(data, pages: parsed-pages)
+  muchpdf(data, pages: parsed-pages, scale: scale)
+  if cite-label != none {
+    cite(cite-label, supplement: "p. " + parsed-pages.map(n => str(n + 1)).join(", "))
+  }
 }

@@ -1,22 +1,25 @@
+#import "math.typ": *
+
 #let style(body) = [
+  #show: math-style
   #set text(font: "Open Sans")
-  #show math.equation: set text(size: 16pt)
   #set terms(separator: [: ])
-  #set page(
-    footer: context [
-      Finn Dittmar
-      #h(1fr)
-      #counter(page).display(
-        "1",
-        both: false,
-      )
-    ],
-  )
 
   #show terms: it => {
     block(fill: luma(235), inset: 0.5em)[#it]
   }
 
   #show link: underline
+  #body
+]
+
+#let sources(body) = [
+  #bibliography(
+    "/sources.yml",
+    title: "Sources",
+    full: false,
+    // TODO: custom style
+    style: "ieee",
+  )
   #body
 ]
