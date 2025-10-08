@@ -1,4 +1,6 @@
 #import "math.typ": *
+#import "./custom/typki/typki.typ": math-framed
+#import "@preview/gentle-clues:1.2.0": warning
 
 #let style(body) = [
   #show: math-style
@@ -9,17 +11,21 @@
     block(fill: luma(235), inset: 0.5em)[#it]
   }
 
+  #show: math-framed
+
+  #show "TODO": warning()[TODO]
+
   #show link: underline
   #body
 ]
 
 #let sources(body) = [
+  #pagebreak()
   #bibliography(
     "/sources.yml",
     title: "Sources",
     full: false,
-    // TODO: custom style
-    style: "ieee",
+    style: "./common/cite-style.cls",
   )
   #body
 ]

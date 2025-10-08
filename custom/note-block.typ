@@ -3,8 +3,8 @@
   type: "info",
   mark: none,
 ) = {
-  let bg = if type == "info" or type == "emoji" { rgb("#11355f9d") } else if type == "warn" {
-    rgb("#e0b81883")
+  let bg = if type == "info" or type == "emoji" { rgb("#1670d671") } else if type == "warn" {
+    rgb("#ebe70f73")
   } else if (
     type == "danger"
   ) { rgb("#ce1e1e91") }

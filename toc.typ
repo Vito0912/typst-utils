@@ -1,4 +1,7 @@
-#let toc(title, subtitle: none, body) = [
+#import "@preview/bullseye:0.1.0": show-target
+#import "./custom/typki/typki.typ": with-deck
+
+#let toc(title, subtitle: none, short: none, body) = [
   #pad(
     top: 6em,
     [
@@ -16,23 +19,30 @@
   #outline()
   #pagebreak()
   #counter(page).update(1)
-  #set page(
-    header: context [
-      #text(title)
-      #if subtitle != none {
-        h(1fr)
-        text(subtitle, weight: "light")
-      }
+  #show: show-target(paged: doc => {
+    set page(
+      header: context [
+        #text(title)
+        #if subtitle != none {
+          h(1fr)
+          text(subtitle, weight: "light")
+        }
 
-    ],
-    footer: context [
-      Finn Dittmar
-      #h(1fr)
-      #counter(page).display(
-        "1",
-        both: false,
-      )
-    ],
-  )
+      ],
+      footer: context [
+        Finn Dittmar
+        #h(1fr)
+        #counter(page).display(
+          "1",
+          both: false,
+        )
+      ],
+    )
+    body
+  })
+
+  #if short != none {
+    show: with-deck.with(short)
+  }
   #body
 ]
