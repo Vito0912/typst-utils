@@ -18,3 +18,7 @@
     ),
   )
 }
+
+#let questions(id, tabki, body) = {
+  heading("Fragen", level: 2)
+}

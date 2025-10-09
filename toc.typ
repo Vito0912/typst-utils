@@ -2,23 +2,25 @@
 #import "./custom/typki/typki.typ": with-deck
 
 #let toc(title, subtitle: none, short: none, body) = [
-  #pad(
-    top: 6em,
-    [
-      #align(center)[
-        #text(title, size: 3em, weight: "bold")\
-        #if subtitle != none {
-          pad(top: 1em)[
-            #text(subtitle, size: 1.5em, weight: "light")
-          ]
-        }
-      ]
-    ],
-  )
-  #pagebreak()
-  #outline()
-  #pagebreak()
-  #counter(page).update(1)
+  #context if not state("included", false).get() [
+    #pad(
+      top: 6em,
+      [
+        #align(center)[
+          #text(title, size: 3em, weight: "bold")\
+          #if subtitle != none {
+            pad(top: 1em)[
+              #text(subtitle, size: 1.5em, weight: "light")
+            ]
+          }
+        ]
+      ],
+    )
+    #pagebreak()
+    #outline()
+    #pagebreak()
+    #counter(page).update(1)
+  ]
   #show: show-target(paged: doc => {
     set page(
       header: context [

@@ -8,6 +8,8 @@
 
   #show math.equation: it => {
     show regex("\d+(\.\d*)?"): x => math.class("normal", num(x))
+    show sym.ast: sym.dot
+    show math.sum: math.limits(math.sum)
     it
   }
 

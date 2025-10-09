@@ -4,3 +4,4 @@
 #import "custom/typki-custom.typ": *
 #import "custom/example.typ": *
 #import "custom/typki/typki.typ" as typki
+#import "custom/typki/typki.typ": c
