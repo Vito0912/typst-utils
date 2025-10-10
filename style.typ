@@ -29,12 +29,18 @@
   #body
 ]
 
-#let sources(body) = [
+#let sources(body, additionalSources: none) = [
   #pagebreak()
 
   #context if not state("included", false).get() [
-    #bibliography(
+
+    #let sourcesArray = (
       "/sources.yml",
+      additionalSources,
+    )
+
+    #bibliography(
+      sourcesArray,
       title: "Sources",
       full: false,
       style: "./common/cite-style.cls",

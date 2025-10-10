@@ -1,7 +1,7 @@
 #import "@preview/bullseye:0.1.0": show-target
 #import "./custom/typki/typki.typ": with-deck
 
-#let toc(title, subtitle: none, short: none, body) = [
+#let toc(title, subtitle: none, short: none, date: none, body) = [
   #context if not state("included", false).get() [
     #pad(
       top: 6em,
@@ -20,6 +20,14 @@
     #outline()
     #pagebreak()
     #counter(page).update(1)
+  ] else [
+    #heading([
+      #if subtitle != none {
+        subtitle
+      } else {
+        title
+      }
+    ])
   ]
   #show: show-target(paged: doc => {
     set page(

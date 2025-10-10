@@ -1,9 +1,19 @@
 #import "note-block.typ": note-block
+#import "typki/typki.typ": display_all
 
 // TODO
 #let example(body) = {
   note-block(
-    body,
+    [
+      #pad(
+        [
+          #underline([*Beispiel*])
+        ],
+        bottom: 0.2em,
+      )
+      #body
+    ],
+    color: rgb("#e0e0e08c"),
   )
 }
 
@@ -13,12 +23,32 @@
   note-block(
     basic(
       id,
-      [#title],
-      [#body],
+      [
+        #title
+      ],
+      [
+        #pad(
+          [
+            #underline([*Definition*])
+          ],
+          bottom: 0.2em,
+        )
+
+        #body
+      ],
     ),
   )
 }
 
-#let questions(id, tabki, body) = {
-  heading("Fragen", level: 2)
+#let question(id, basic, question, answer) = {
+  basic(
+    id,
+    [
+      #underline(text(question, weight: "bold"))\
+    ],
+    [
+      #answer\
+    ],
+    display: display_all,
+  )
 }

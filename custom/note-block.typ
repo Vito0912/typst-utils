@@ -2,6 +2,7 @@
   body,
   type: "info",
   mark: none,
+  color: none,
 ) = {
   let bg = if type == "info" or type == "emoji" { rgb("#1670d671") } else if type == "warn" {
     rgb("#ebe70f73")
@@ -13,6 +14,10 @@
     "💬"
   }
 
+  if color != none {
+    bg = color
+  }
+
   let show-mark = if type == "emoji" and mark != none { mark } else { default-mark }
 
   block(
@@ -21,22 +26,17 @@
     fill: bg,
     radius: 6pt,
   )[
-    #grid(
-      columns: 2,
-      column-gutter: 8pt,
-      align: start + horizon,
-    )[
-      #box(
-        width: 1.4em,
-      )[
-        #align(horizon + center)[ #show-mark ]
-      ]
 
-      #box(inset: 2pt)[
-        #align(start + horizon)[
-          #body
-        ]
-      ]
-    ]
+    #table(
+      columns: 2,
+      stroke: none,
+      [
+        #text(show-mark, size: 1.5em)
+      ],
+      [
+        #body
+      ],
+    )
+
   ]
 }
