@@ -33,7 +33,9 @@
       [
         #text(show-mark, size: 1.5em)
       ],
-      [
+      table.cell(
+        breakable: false
+      )[
         #body
       ],
     )

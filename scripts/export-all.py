@@ -95,12 +95,15 @@ def main():
         rel_path = typ_path.relative_to(repo_root)
 
         output_file = export_dir / rel_path.with_suffix(".pdf")
-        rel_path_no_ext = str(rel_path.with_suffix(""))
-        output_anki_file = export_dir / f"{rel_path_no_ext}_anki.txt"
+
+        path_to_file = output_file.parent
+        filename = output_file.with_suffix("").name
+
+        output_anki_file = path_to_file / ("." + filename + "_anki.txt")
 
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
-        md5_file = Path(str(output_file) + ".md5")
+        md5_file = Path(path_to_file / ("." + filename + ".md5"))
 
         # Check if MD5 hash file exists and matches
         if not ignore_md5 and md5_file.exists():

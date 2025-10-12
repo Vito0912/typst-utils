@@ -29,15 +29,17 @@
   #body
 ]
 
-#let sources(body, additionalSources: none) = [
-  #pagebreak()
-
+#let sources(body, additionalSources: ()) = [
   #context if not state("included", false).get() [
+    #pagebreak()
 
     #let sourcesArray = (
       "/sources.yml",
-      additionalSources,
     )
+
+    #for source in additionalSources {
+      sourcesArray.push(source)
+    }
 
     #bibliography(
       sourcesArray,
