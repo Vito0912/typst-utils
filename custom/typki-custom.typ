@@ -85,6 +85,7 @@
 #let tabki(
   starting-id,
   offset: 0,
+  both: false,
   ..children,
 ) = {
   let entries = ()
@@ -101,22 +102,36 @@
     let index1 = 2 * n
     let index2 = 2 * n + 1
 
-    let card = basic(
-      starting-id + n + offset - 1,
-      offset: -1,
-      items.at(index1),
-      items.at(index2),
-      display: typki.display_array,
-    )
+    let card = none
 
-    entries.push(card.at(0))
-    entries.push(card.at(1))
+    if (both) {
+      card = basic-reverse(
+        starting-id + n + offset - 1,
+        offset: -1,
+        items.at(index1),
+        items.at(index2),
+        display: typki.display_array,
+      )
+    } else {
+      card = basic(
+        starting-id + n + offset - 1,
+        offset: -1,
+        items.at(index1),
+        items.at(index2),
+        display: typki.display_array,
+      )
+    }
+
+    entries.push(table.cell(card.at(0), breakable: false, fill: rgb("#e0e0e0")))
+    entries.push(table.cell(card.at(1), breakable: false, fill: rgb("#f1f1f1")))
 
     n = n + 1
   }
 
   table(
-    columns: 2,
+    columns: (auto, 1fr),
+    gutter: 0.5em,
+    stroke: none,
     ..entries,
   )
 }

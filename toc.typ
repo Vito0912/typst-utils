@@ -36,7 +36,10 @@
       ],
     )
     #pagebreak()
-    #outline()
+    #show: show-target(paged: doc => {
+      outline()
+      doc
+    })
     #pagebreak()
     #counter(page).update(1)
   ]
