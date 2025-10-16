@@ -17,8 +17,8 @@
   )
 }
 
-#let definition(title, id, basic, body) = {
-  heading(title, level: 3)
+#let definition(title, id, basic, level: 3, body) = {
+  heading(title, level: level)
 
   note-block(
     basic(

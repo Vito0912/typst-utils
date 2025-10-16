@@ -2,7 +2,7 @@
 
 #let math-style(body) = [
   #set-num(decimal-separator: ",", omit-unity-mantissa: false)
-  #set-group(separator: ".")
+  #set-group(separator: sym.space.thin)
 
   #show math.equation: set text(size: 16pt)
 

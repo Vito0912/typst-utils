@@ -141,6 +141,7 @@ def main():
                 str(output_anki_file),
                 "-q",
                 str(typ_path),
+                "-t",
                 "--root",
                 str(repo_root),
             ],
