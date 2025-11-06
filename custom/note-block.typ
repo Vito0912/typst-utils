@@ -3,6 +3,7 @@
   type: "info",
   mark: none,
   color: none,
+  breakable: false,
 ) = {
   let bg = if type == "info" or type == "emoji" { rgb("#1670d671") } else if type == "warn" {
     rgb("#ebe70f73")
@@ -34,7 +35,7 @@
         #text(show-mark, size: 1.5em)
       ],
       table.cell(
-        breakable: false,
+        breakable: breakable,
       )[
         #body
       ],

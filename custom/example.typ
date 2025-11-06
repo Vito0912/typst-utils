@@ -1,9 +1,9 @@
 #import "note-block.typ": note-block
-#import "typki/typki.typ": display_all
 
 // TODO
-#let example(body) = {
+#let example(breakable: false, body) = {
   note-block(
+    breakable: breakable,
     [
       #pad(
         [
@@ -17,10 +17,11 @@
   )
 }
 
-#let definition(title, id, basic, level: 3, body) = {
+#let definition(title, id, basic, level: 3, breakable: false, body) = {
   heading(title, level: level)
 
   note-block(
+    breakable: breakable,
     basic(
       id,
       [
@@ -49,6 +50,6 @@
     [
       #answer\
     ],
-    display: display_all,
+    display: "all",
   )
 }

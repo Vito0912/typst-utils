@@ -10,6 +10,7 @@
     show regex("\d+(\.\d*)?"): x => math.class("normal", num(x))
     show sym.ast: sym.dot
     show math.sum: math.limits(math.sum)
+    show math.product: math.limits(math.product)
     it
   }
 

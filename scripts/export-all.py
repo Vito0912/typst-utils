@@ -7,7 +7,7 @@ import hashlib
 import time
 import csv
 from pathlib import Path
-
+import sys, ctypes as ct
 
 def get_md5(file_path):
     """Calculate MD5 hash of a file."""
@@ -33,31 +33,6 @@ def find_typ_files(repo_root):
                 typ_files.append(full_path)
 
     return typ_files
-
-
-def remove_duplicate_uuids(csv_file):
-    """Remove duplicate rows based on UUID (second column)."""
-    seen_uuids = set()
-    unique_rows = []
-    duplicate_count = 0
-
-    with open(csv_file, "r", encoding="utf-8", newline="") as f:
-        reader = csv.reader(f, delimiter=";")
-        for row in reader:
-            if len(row) >= 2:
-                uuid = row[1]
-                if uuid not in seen_uuids:
-                    seen_uuids.add(uuid)
-                    unique_rows.append(row)
-                else:
-                    duplicate_count += 1
-
-    with open(csv_file, "w", encoding="utf-8", newline="") as f:
-        writer = csv.writer(f, delimiter=";")
-        writer.writerows(unique_rows)
-
-    if duplicate_count > 0:
-        print(f"Removed {duplicate_count} duplicate card(s)")
 
 
 def format_time(elapsed):
@@ -90,6 +65,8 @@ def main():
 
     typ_files = find_typ_files(repo_root)
 
+    out_files = []
+
     for typ_file in typ_files:
         typ_path = Path(typ_file)
         rel_path = typ_path.relative_to(repo_root)
@@ -98,8 +75,6 @@ def main():
 
         path_to_file = output_file.parent
         filename = output_file.with_suffix("").name
-
-        output_anki_file = path_to_file / ("." + filename + "_anki.txt")
 
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
@@ -132,41 +107,24 @@ def main():
             check=True,
         )
 
-        print("Creating Anki cards")
-        subprocess.run(
-            [
-                "python",
-                str(script_dir / "../custom/typki/typki/__init__.py"),
-                "-o",
-                str(output_anki_file),
-                "-q",
-                str(typ_path),
-                "-t",
-                "--root",
-                str(repo_root),
-            ],
-            check=True,
-        )
+        out_files.append(typ_path)
 
-    merged_anki_file = export_dir / "anki_cards.txt"
-    with open(merged_anki_file, "w", encoding="utf-8") as merged:
-        for anki_file in export_dir.rglob("*_anki.txt"):
-            with open(anki_file, "r", encoding="utf-8") as f:
-                lines = f.readlines()[5:]
-                merged.writelines(lines)
 
-    print("Removing duplicate cards...")
-    remove_duplicate_uuids(merged_anki_file)
+    print("Creating Anki cards")
 
-    # Add string to top of merged file
-    with open(merged_anki_file, "r+", encoding="utf-8") as f:
-        content = f.read()
-        f.seek(0, 0)
-        f.write("""#notetype column:1
-#guid column:2
-#deck column: 3
-#html:true
-#separator:Semicolon""" + "\n" + content)
+    subprocess.run(
+        [
+            "python",
+            str(script_dir / "../custom/typki/typki/__init__.py"),
+            "-i",
+            "-q",
+            *map(str, out_files),
+            "-t",
+            "--root",
+            str(repo_root),
+        ],
+        check=True,
+    )
 
     end_time = time.time()
     elapsed = end_time - start_time

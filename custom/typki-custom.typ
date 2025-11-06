@@ -41,7 +41,7 @@
   (new-rng, uuid)
 }
 
-#let note(id, field1, field2, note-type: none, deck: none, display: typki.display_field2, offset: 0) = {
+#let note(id, field1, field2, note-type: none, deck: none, display: "field2", offset: 0) = {
   if offset == 0 {
     panic(
       "Offset must be set manually to avoid ID collisions. Set with #set-typki-offset(<offset>).",
@@ -51,7 +51,7 @@
   typki.note(uuid, field1, field2, note-type: note-type, deck: deck, display: display)
 }
 
-#let basic(id, field1, field2, deck: none, display: typki.display_field2, offset: 0) = {
+#let basic(id, field1, field2, deck: none, display: "field2", offset: 0) = {
   if offset == 0 {
     panic(
       "Offset must be set manually to avoid ID collisions. Set with #set-typki-offset(<offset>).",
@@ -61,7 +61,7 @@
   typki.basic(uuid, field1, field2, deck: deck, display: display)
 }
 
-#let basic-reverse(id, field1, field2, deck: none, display: typki.display_field2, offset: 0) = {
+#let basic-reverse(id, field1, field2, deck: none, display: "field2", offset: 0) = {
   if offset == 0 {
     panic(
       "Offset must be set manually to avoid ID collisions. Set with #set-typki-offset(<offset>).",
@@ -71,7 +71,7 @@
   typki.basic-reverse(uuid, field1, field2, deck: deck, display: display)
 }
 
-#let cloze(id, field1, deck: none, display: typki.display_field1, offset: 0) = {
+#let cloze(id, field1, deck: none, display: "field1", offset: 0) = {
   if offset == 0 {
     panic(
       "Offset must be set manually to avoid ID collisions. Set with #set-typki-offset(<offset>).",
@@ -110,7 +110,7 @@
         offset: -1,
         items.at(index1),
         items.at(index2),
-        display: typki.display_array,
+        display: "array",
       )
     } else {
       card = basic(
@@ -118,7 +118,7 @@
         offset: -1,
         items.at(index1),
         items.at(index2),
-        display: typki.display_array,
+        display: "array",
       )
     }
 

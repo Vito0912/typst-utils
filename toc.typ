@@ -73,6 +73,8 @@
 
   #if short != none {
     show: with-deck.with(short)
+    body
+  } else {
+    body
   }
-  #body
 ]
