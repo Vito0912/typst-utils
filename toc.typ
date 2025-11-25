@@ -21,7 +21,7 @@
             ]
           }
           #if date != none {
-            let parse(s) = toml.decode("date = " + s).date
+            let parse(s) = toml(bytes("date = " + s)).date
             pad(top: 1em)[
               #text(
                 parse(date).display(
@@ -56,7 +56,7 @@
         Finn Dittmar
         #if (date != none) {
           text(" - ")
-          let parse(s) = toml.decode("date = " + s).date
+          let parse(s) = toml(bytes("date = " + s)).date
           parse(date).display(
             "[day].[month].[year repr:last_two]",
           )

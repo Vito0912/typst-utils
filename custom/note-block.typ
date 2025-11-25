@@ -29,7 +29,7 @@
   )[
 
     #table(
-      columns: 2,
+      columns: (.9em, 1fr),
       stroke: none,
       [
         #text(show-mark, size: 1.5em)

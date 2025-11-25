@@ -6,3 +6,4 @@
 #import "@preview/cetz-plot:0.1.3" as plot
 #import "custom/typki/typki.typ" as typki
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
+#import "@preview/lilaq:0.5.0" as lq

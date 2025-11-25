@@ -4,7 +4,7 @@
   #set-num(decimal-separator: ",", omit-unity-mantissa: false)
   #set-group(separator: sym.space.thin)
 
-  #show math.equation: set text(size: 16pt)
+  #show math.equation: set text()
 
   #show math.equation: it => {
     show regex("\d+(\.\d*)?"): x => math.class("normal", num(x))

@@ -112,6 +112,20 @@ def main():
 
     print("Creating Anki cards")
 
+    print("Running command: "
+           + " ".join(        [
+            "python",
+            str(script_dir / "../custom/typki/typki/__init__.py"),
+            "-i",
+            
+            *map(str, out_files),
+            "-t",
+            "--root",
+            str(repo_root),
+        ],) 
+
+    )
+
     subprocess.run(
         [
             "python",

@@ -1,6 +1,7 @@
 #import "math.typ": *
 #import "./custom/typki/typki.typ": math-framed
 #import "@preview/gentle-clues:1.2.0": warning
+#import "custom/typki/typki.typ" as typki
 
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
@@ -23,6 +24,10 @@
 
   // Code
   #show: codly-init.with()
+
+  #show: typki.fix-html
+  #show: typki.unwrap-aligns
+  #show: typki.unwrap-paddings
 
   #codly(languages: codly-languages, zebra-fill: none)
 
