@@ -7,3 +7,4 @@
 #import "custom/typki/typki.typ": c
 #import "custom/zap-custom.typ": *
 #import "custom/terminal.typ": *
+#import "custom/cetz-custom.typ": *

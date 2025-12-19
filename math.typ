@@ -17,4 +17,4 @@
   #body
 ]
 
-#let kgms = zi.declare("kgm/s^2")
+#let norm(body) = $lr(size: #1em, bar.v.double arrow(body) bar.v.double)$

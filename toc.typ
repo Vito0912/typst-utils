@@ -1,7 +1,11 @@
 #import "@preview/bullseye:0.1.0": show-target
 #import "./custom/typki/typki.typ": with-deck
+#import "utils.typ": with-heading-offset
 
-#let toc(title, subtitle: none, short: none, date: none, note: none, body) = [
+#let toc(title, subtitle: none, short: none, date: none, note: none, heading-indent: none, body) = [
+  #let subtitle-state = state("toc-subtitle", subtitle)
+  #let title-state = state("toc-title", title)
+  #let date-state = state("toc-date", date)
   #context if not state("included", false).get() [
     #pad(
       top: 6em,
@@ -43,38 +47,61 @@
     #pagebreak()
     #counter(page).update(1)
   ]
-  #show: show-target(paged: doc => {
-    set page(
-      header: context [
-        #text(title)
-        #if subtitle != none {
-          h(1fr)
-          text(subtitle, weight: "light")
-        }
-      ],
-      footer: context [
-        Finn Dittmar
-        #if (date != none) {
-          text(" - ")
-          let parse(s) = toml(bytes("date = " + s)).date
-          parse(date).display(
-            "[day].[month].[year repr:last_two]",
+  #subtitle-state.update(subtitle)
+  #title-state.update(title)
+  #date-state.update(date)
+  #context if not state("included", false).get() [
+    #show: show-target(paged: doc => {
+      set page(
+        header: context [
+          #text(title-state.get())
+          #if subtitle-state.get() != none {
+            h(1fr)
+            text(subtitle-state.get(), weight: "light")
+          }
+        ],
+        footer: context [
+          Finn Dittmar
+          #if (date-state.get() != none) {
+            text(" - ")
+            let parse(s) = toml(bytes("date = " + s)).date
+            parse(date-state.get()).display(
+              "[day].[month].[year repr:last_two]",
+            )
+          }
+          #h(1fr)
+          #counter(page).display(
+            "1",
+            both: false,
           )
-        }
-        #h(1fr)
-        #counter(page).display(
-          "1",
-          both: false,
-        )
-      ],
-    )
-    doc
-  })
+        ],
+      )
+      doc
+    })
+    #if short != none {
+      show: with-deck.with(short)
+      body
+    } else {
+      body
+    }
+  ] else [
+    #if heading-indent != none {
+      show: with-heading-offset.with(heading-indent)
+      if short != none {
+        show: with-deck.with(short)
+        body
+      } else {
+        body
+      }
+    } else {
+      show: with-heading-offset.with(1)
+      if short != none {
+        show: with-deck.with(short)
+        body
+      } else {
+        body
+      }
+    }
 
-  #if short != none {
-    show: with-deck.with(short)
-    body
-  } else {
-    body
-  }
+  ]
 ]

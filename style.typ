@@ -2,6 +2,7 @@
 #import "./custom/typki/typki.typ": math-framed
 #import "@preview/gentle-clues:1.2.0": warning
 #import "custom/typki/typki.typ" as typki
+#import "utils.typ": init-relative-headings
 
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
@@ -15,6 +16,8 @@
   #show terms: it => {
     block(fill: luma(235), inset: 0.5em)[#it]
   }
+
+  #show: init-relative-headings
 
   #show: math-framed
 
