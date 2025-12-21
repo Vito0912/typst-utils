@@ -24,3 +24,11 @@
     state
   })
 }
+
+#let include-doc(docs, sub: false) = {
+  state("included", 0).update(x => x + 1)
+  for doc in docs {
+    doc
+  }
+  state("included", 0).update(x => x - 1)
+}

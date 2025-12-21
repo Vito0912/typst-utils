@@ -38,7 +38,7 @@
 ]
 
 #let sources(body, additionalSources: ()) = [
-  #context if not state("included", false).get() [
+  #context if state("included", 0).get() == 0 [
     #pagebreak()
 
     #let sourcesArray = (

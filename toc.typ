@@ -1,12 +1,30 @@
 #import "@preview/bullseye:0.1.0": show-target
 #import "./custom/typki/typki.typ": with-deck
 #import "utils.typ": with-heading-offset
+#import "style.typ": sources
 
 #let toc(title, subtitle: none, short: none, date: none, note: none, heading-indent: none, body) = [
   #let subtitle-state = state("toc-subtitle", subtitle)
   #let title-state = state("toc-title", title)
   #let date-state = state("toc-date", date)
-  #context if not state("included", false).get() [
+
+  #let first-chapter = state("first-chapter", true)
+
+  #show outline.entry: it => context {
+    if it.element.func() == heading {
+      if it.element.level == 1 {
+        if not first-chapter.get() {
+          v(3mm)
+        }
+        first-chapter.update(false)
+      }
+      it
+    } else {
+      it
+    }
+  }
+
+  #context if state("included", 0).get() == 0 [
     #pad(
       top: 6em,
       [
@@ -46,11 +64,13 @@
     })
     #pagebreak()
     #counter(page).update(1)
+  ] else [
+    #heading(text(weight: "bold")[#subtitle])
   ]
   #subtitle-state.update(subtitle)
   #title-state.update(title)
   #date-state.update(date)
-  #context if not state("included", false).get() [
+  #context if state("included", 0).get() == 0 [
     #show: show-target(paged: doc => {
       set page(
         header: context [
@@ -81,8 +101,10 @@
     #if short != none {
       show: with-deck.with(short)
       body
+      show: sources
     } else {
       body
+      show: sources
     }
   ] else [
     #if heading-indent != none {
@@ -90,18 +112,21 @@
       if short != none {
         show: with-deck.with(short)
         body
+        show: sources
       } else {
         body
+        show: sources
       }
     } else {
       show: with-heading-offset.with(1)
       if short != none {
         show: with-deck.with(short)
         body
+        show: sources
       } else {
         body
+        show: sources
       }
     }
-
   ]
 ]
