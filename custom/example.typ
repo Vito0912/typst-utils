@@ -1,6 +1,5 @@
 #import "note-block.typ": note-block
 
-// TODO
 #let example(breakable: false, body) = {
   note-block(
     breakable: breakable,
@@ -52,4 +51,59 @@
     ],
     display: "all",
   )
+}
+
+
+#let example-state = state("example-state", ())
+#let example-counter = counter("example-counter")
+
+#let example-beta(body, show-link: true, custom-label: none) = {
+  example-counter.step()
+  context {
+    let count = example-counter.get().first()
+    let auto-lbl = label("example-" + str(count))
+
+    example-state.update(examples => {
+      examples.push((
+        number: count,
+        body: body,
+        custom-label: custom-label,
+      ))
+      examples
+    })
+
+    if show-link {
+      let target = if custom-label != none { custom-label } else { auto-lbl }
+      link(target)[Beispiel #count #sym.arrow.double.tr]
+    }
+  }
+}
+
+#let example-define = example-beta
+
+#let examples-outline(title: "Beispiele") = {
+  heading(title, level: 1)
+
+  context {
+    let examples = example-state.final()
+    for ex in examples {
+      let count = ex.number
+      let auto-lbl = label("example-" + str(count))
+
+      [
+        #show figure.where(kind: "example"): set block(breakable: true)
+
+        #block(
+          [
+            #pad(bottom: 0.2em)[#underline([*Beispiel #count*])]
+            #ex.body
+          ],
+          fill: rgb("#e0e0e041"),
+          radius: 8pt,
+          inset: (x: 12pt, y: 8pt),
+        )
+        #if ex.custom-label != none { ex.custom-label } else { auto-lbl }
+      ]
+    }
+  }
 }

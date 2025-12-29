@@ -3,6 +3,7 @@
 #import "@preview/gentle-clues:1.2.0": warning
 #import "custom/typki/typki.typ" as typki
 #import "utils.typ": init-relative-headings
+#import "custom/example.typ": examples-outline
 
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
@@ -39,6 +40,8 @@
 
 #let sources(body, additionalSources: ()) = [
   #context if state("included", 0).get() == 0 [
+    #examples-outline()
+
     #pagebreak()
 
     #let sourcesArray = (
