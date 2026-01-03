@@ -59,22 +59,23 @@
 
 #let example-beta(body, show-link: true, custom-label: none) = {
   example-counter.step()
+
+  example-state.update(examples => {
+    examples.push((
+      body: body,
+      custom-label: custom-label,
+    ))
+    examples
+  })
+
   context {
     let count = example-counter.get().first()
     let auto-lbl = label("example-" + str(count))
-
-    example-state.update(examples => {
-      examples.push((
-        number: count,
-        body: body,
-        custom-label: custom-label,
-      ))
-      examples
-    })
+    let auto-lbl-back = label("example-" + str(count) + "-back")
 
     if show-link {
       let target = if custom-label != none { custom-label } else { auto-lbl }
-      link(target)[Beispiel #count #sym.arrow.double.tr]
+      link(target)[Beispiel #count #sym.arrow.double.tr #auto-lbl-back]
     }
   }
 }
@@ -86,9 +87,10 @@
 
   context {
     let examples = example-state.final()
-    for ex in examples {
-      let count = ex.number
+    for (i, ex) in examples.enumerate() {
+      let count = i + 1
       let auto-lbl = label("example-" + str(count))
+      let auto-lbl-back = label("example-" + str(count) + "-back")
 
       [
         #show figure.where(kind: "example"): set block(breakable: true)
@@ -97,6 +99,7 @@
           [
             #pad(bottom: 0.2em)[#underline([*Beispiel #count*])]
             #ex.body
+            #link(auto-lbl-back)[Zurück zur Referenz #sym.arrow.double.bl]
           ],
           fill: rgb("#e0e0e041"),
           radius: 8pt,

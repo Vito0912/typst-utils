@@ -13,10 +13,10 @@
   #show outline.entry: it => context {
     if it.element.func() == heading {
       if it.element.level == 1 {
-        if not first-chapter.get() {
+        let headings = query(heading.where(level: 1))
+        if headings.len() > 0 and it.element.location() != headings.first().location() {
           v(3mm)
         }
-        first-chapter.update(false)
       }
       it
     } else {
@@ -59,7 +59,14 @@
     )
     #pagebreak()
     #show: show-target(paged: doc => {
-      outline()
+      context {
+        let elems = query(heading.where(outlined: true))
+        if elems.len() > 100 {
+          columns(2, outline())
+        } else {
+          outline()
+        }
+      }
       doc
     })
     #pagebreak()
@@ -91,8 +98,8 @@
           }
           #h(1fr)
           #counter(page).display(
-            "1",
-            both: false,
+            "1/1",
+            both: true,
           )
         ],
       )

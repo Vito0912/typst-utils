@@ -32,3 +32,17 @@
   }
   state("included", 0).update(x => x - 1)
 }
+
+#let link-ref(target, text: none) = {
+  context {
+    let elements = query(target)
+    if elements.len() == 1 {
+      let element = elements.first()
+      let query-text = if text != none { text } else { "Kapitel " + element.body }
+
+      link(target, [#query-text #sym.arrow.double.tr])
+    } else {
+      strong[Reference not in Documentation: #str(target)]
+    }
+  }
+}
