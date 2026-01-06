@@ -1,4 +1,4 @@
-// Source JL710
+// Source JL710 //
 #let __state = state("relative heading offset", 0)
 
 #let offsetted(body) = context {
@@ -24,6 +24,7 @@
     state
   })
 }
+////
 
 #let include-doc(docs, sub: false) = {
   state("included", 0).update(x => x + 1)
@@ -33,14 +34,18 @@
   state("included", 0).update(x => x - 1)
 }
 
-#let link-ref(target, text: none) = {
+#let link-ref(target, text: none, show-page: true) = {
   context {
     let elements = query(target)
     if elements.len() == 1 {
       let element = elements.first()
       let query-text = if text != none { text } else { "Kapitel " + element.body }
 
-      link(target, [#query-text #sym.arrow.double.tr])
+      link(target, [#query-text #{
+          if show-page [
+            (p. #{ counter(page).at(element.location()).first() })
+          ]
+        } #sym.arrow.double.tr])
     } else {
       strong[Reference not in Documentation: #str(target)]
     }

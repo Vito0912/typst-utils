@@ -72,7 +72,7 @@
     #pagebreak()
     #counter(page).update(1)
   ] else [
-    #heading(text(weight: "bold")[#subtitle])
+    #heading(text(weight: "bold")[#subtitle #label(subtitle)])
   ]
   #subtitle-state.update(subtitle)
   #title-state.update(title)

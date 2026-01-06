@@ -17,7 +17,7 @@
 }
 
 #let definition(title, id, basic, level: 3, breakable: false, body) = {
-  heading(title, level: level)
+  context { heading(title, level: level + state("relative heading offset", 0).get()) }
 
   note-block(
     breakable: breakable,
