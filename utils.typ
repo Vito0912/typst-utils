@@ -51,3 +51,42 @@
     }
   }
 }
+
+#let adv-table(..args) = {
+  let inputs = args.named()
+  let children = args.pos()
+
+  let col-count = 1
+  let cols = inputs.at("columns", default: 1)
+
+  if type(cols) == int {
+    col-count = cols
+  } else if type(cols) == array {
+    col-count = cols.len()
+  }
+
+  let styled-children = children
+    .enumerate()
+    .map(((i, child)) => {
+      if i < col-count {
+        set text(
+          fill: white,
+          weight: "bold",
+        )
+        align(center, child)
+      } else {
+        child
+      }
+    })
+
+  table(
+    stroke: none,
+    column-gutter: .25em,
+    row-gutter: .1em,
+    fill: (_, row) => if row == 0 { luma(80) } else { luma(240) },
+
+    ..inputs,
+    ..styled-children
+  )
+}
+
