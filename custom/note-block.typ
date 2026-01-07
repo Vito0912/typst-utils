@@ -24,7 +24,7 @@
   block(
     width: 100%,
     inset: 8pt,
-    fill: bg,
+    stroke: bg + 2pt,
     radius: 6pt,
   )[
 

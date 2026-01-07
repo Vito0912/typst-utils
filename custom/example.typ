@@ -82,6 +82,42 @@
 
 #let example-define = example-beta
 
+// I honestly don't care but should it be relevant, consider this sample 0BSD licensed - Cady B.
+// https://opensource.org/license/0BSD
+// For the original discussion see https://discord.com/channels/1054443721975922748/1458429883612008510 answered by pink_3d (Discord: 284602593597194250)
+#let fancy-block(body, radius: 8pt, stroke: rgb("#aaaaaaaa")) = context {
+  let start = here()
+  let marker = <fancy-block-end>
+  let c = counter("fancy-block-counter")
+  c.update(0)
+
+  [#grid(
+      columns: 100%, inset: radius,
+      grid.header(grid.cell(inset: (bottom: radius, rest: 0pt), context if c.get().first() == 0 {
+        place(curve(
+          stroke: stroke,
+          curve.move((0pt, radius)),
+          curve.quad((0pt, 0pt), (radius, 0pt)),
+          curve.line((100% - radius, 0pt)),
+          curve.quad((100%, 0pt), (100%, radius)),
+        ))
+      }
+        + c.step())),
+      grid.cell(stroke: (x: stroke), inset: (y: 4pt), body),
+      grid.footer(grid.cell(inset: (top: radius, rest: 0pt), context if c.get().first()
+        == c.at(query(selector(marker).after(start)).first().location()).first() {
+        place(curve(
+          stroke: stroke,
+          curve.move((0pt, -radius)),
+          curve.quad((0pt, 0pt), (radius, 0pt)),
+          curve.line((100% - radius, 0pt)),
+          curve.quad((100%, 0pt), (100%, -radius)),
+        ))
+      }))
+    )
+    #[]#marker]
+}
+
 #let examples-outline(title: "Beispiele") = {
   heading(title, level: 1)
 
@@ -91,20 +127,34 @@
       let count = i + 1
       let auto-lbl = label("example-" + str(count))
       let auto-lbl-back = label("example-" + str(count) + "-back")
+      let stroke-color = rgb("#aaaaaa79")
 
       [
         #show figure.where(kind: "example"): set block(breakable: true)
 
-        #block(
+        /*#block(
           [
-            #pad(bottom: 0.2em)[#underline([*Beispiel #count*])]
+            #pad(bottom: 0.2em)[#underline([*Beispiel #count*]) #h(1fr)             #link(
+                auto-lbl-back,
+              )[Zurück zur Referenz #sym.arrow.double.bl]]
             #ex.body
-            #link(auto-lbl-back)[Zurück zur Referenz #sym.arrow.double.bl]
           ],
-          fill: rgb("#e0e0e041"),
+          stroke: rgb("#aaaaaa79"),
           radius: 8pt,
           inset: (x: 12pt, y: 8pt),
+          breakable: false,
+        )*/
+
+        #fancy-block(
+          [
+            #pad(bottom: 0.2em)[#underline([*Beispiel #count*]) #h(1fr)             #link(
+                auto-lbl-back,
+              )[Zurück zur Referenz #sym.arrow.double.bl]]
+            #ex.body
+          ],
+          stroke: stroke-color,
         )
+
         #if ex.custom-label != none { ex.custom-label } else { auto-lbl }
       ]
     }
