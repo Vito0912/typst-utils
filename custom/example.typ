@@ -57,13 +57,14 @@
 #let example-state = state("example-state", ())
 #let example-counter = counter("example-counter")
 
-#let example-beta(body, show-link: true, custom-label: none) = {
+#let example-beta(body, show-link: true, custom-label: none, text: none) = {
   example-counter.step()
 
   example-state.update(examples => {
     examples.push((
       body: body,
       custom-label: custom-label,
+      text: text,
     ))
     examples
   })
@@ -75,7 +76,11 @@
 
     if show-link {
       let target = if custom-label != none { custom-label } else { auto-lbl }
-      link(target)[Beispiel #count #sym.arrow.double.tr #auto-lbl-back]
+      if text != none {
+        link(target)[#text (#count) #sym.arrow.double.tr #auto-lbl-back]
+      } else {
+        link(target)[Beispiel #count #sym.arrow.double.tr #auto-lbl-back]
+      }
     }
   }
 }
@@ -119,10 +124,14 @@
 }
 
 #let examples-outline(title: "Beispiele") = {
-  heading(title, level: 1)
-
   context {
     let examples = example-state.final()
+
+    if examples.len() == 0 {
+      return
+    }
+    heading(title, level: 1)
+
     for (i, ex) in examples.enumerate() {
       let count = i + 1
       let auto-lbl = label("example-" + str(count))
@@ -132,22 +141,14 @@
       [
         #show figure.where(kind: "example"): set block(breakable: true)
 
-        /*#block(
-          [
-            #pad(bottom: 0.2em)[#underline([*Beispiel #count*]) #h(1fr)             #link(
-                auto-lbl-back,
-              )[Zurück zur Referenz #sym.arrow.double.bl]]
-            #ex.body
-          ],
-          stroke: rgb("#aaaaaa79"),
-          radius: 8pt,
-          inset: (x: 12pt, y: 8pt),
-          breakable: false,
-        )*/
-
         #fancy-block(
           [
-            #pad(bottom: 0.2em)[#underline([*Beispiel #count*]) #h(1fr)             #link(
+            #pad(bottom: 0.2em)[
+              #if ex.text != none [
+                #underline([*#ex.text* (Beispiel #count)])
+              ] else [#underline([*Beispiel #count*])]
+              #h(1fr)
+              #link(
                 auto-lbl-back,
               )[Zurück zur Referenz #sym.arrow.double.bl]]
             #ex.body

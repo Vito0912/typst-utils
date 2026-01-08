@@ -1,9 +1,9 @@
 #import "math.typ": *
 #import "./custom/typki/typki.typ": math-framed
-#import "@preview/gentle-clues:1.2.0": warning
 #import "custom/typki/typki.typ" as typki
 #import "utils.typ": init-relative-headings
 #import "custom/example.typ": examples-outline
+#import "imports.typ": equate.equate, warning
 
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
@@ -23,6 +23,8 @@
   #show: math-framed
 
   #show "TODO": warning()[TODO]
+
+  // #show: equate.with(breakable: true)
 
   #show link: underline
 

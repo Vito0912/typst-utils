@@ -26,7 +26,7 @@
 }
 ////
 
-#let include-doc(docs, sub: false) = {
+#let include-doc(docs, sub: false, ignore-indent: false) = {
   state("included", 0).update(x => x + 1)
   for doc in docs {
     doc
@@ -70,10 +70,25 @@
     .map(((i, child)) => {
       if i < col-count {
         set text(
-          fill: white,
+          fill: black,
           weight: "bold",
         )
-        align(center, child)
+        layout(size => {
+          let size = measure(width: size.width, table(columns: inputs.at("columns", default: 1), ..children))
+
+          block(
+            radius: 3pt,
+            stroke: luma(150),
+            width: (size.width),
+            inset: 0pt,
+            outset: 0pt,
+            spacing: 0pt,
+            above: 0pt,
+            below: 0pt,
+            height: 1.3em,
+            align(center + horizon, child),
+          )
+        })
       } else {
         child
       }
@@ -83,7 +98,8 @@
     stroke: none,
     column-gutter: .25em,
     row-gutter: .1em,
-    fill: (_, row) => if row == 0 { luma(80) } else { luma(240) },
+    fill: (_, row) => if row == 0 { luma(255) } else { luma(245) },
+    inset: (_, row) => if row == 0 { (bottom: 2pt) } else { 4pt },
 
     ..inputs,
     ..styled-children

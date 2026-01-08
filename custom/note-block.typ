@@ -29,7 +29,8 @@
   )[
 
     #table(
-      columns: (.9em, 1fr),
+      columns: (1em, 1fr),
+      inset: 2pt,
       stroke: none,
       [
         #text(show-mark, size: 1.5em)
