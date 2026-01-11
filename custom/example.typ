@@ -1,4 +1,5 @@
 #import "note-block.typ": note-block
+#import "typki/typki.typ": is-typki
 
 #let example(breakable: false, body) = {
   note-block(
@@ -58,6 +59,10 @@
 #let example-counter = counter("example-counter")
 
 #let example-beta(body, show-link: true, custom-label: none, text: none) = {
+  if is-typki {
+    example(body)
+    return
+  }
   example-counter.step()
 
   example-state.update(examples => {
@@ -91,6 +96,11 @@
 // https://opensource.org/license/0BSD
 // For the original discussion see https://discord.com/channels/1054443721975922748/1458429883612008510 answered by pink_3d (Discord: 284602593597194250)
 #let fancy-block(body, radius: 8pt, stroke: rgb("#aaaaaaaa")) = context {
+  if is-typki {
+    block(breakable: false, radius: radius, body)
+    return
+  }
+
   let start = here()
   let marker = <fancy-block-end>
   let c = counter("fancy-block-counter")

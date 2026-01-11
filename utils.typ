@@ -73,22 +73,17 @@
           fill: black,
           weight: "bold",
         )
-        layout(size => {
-          let size = measure(width: size.width, table(columns: inputs.at("columns", default: 1), ..children))
-
-          block(
-            radius: 3pt,
-            stroke: luma(150),
-            width: (size.width),
-            inset: 0pt,
-            outset: 0pt,
-            spacing: 0pt,
-            above: 0pt,
-            below: 0pt,
-            height: 1.3em,
-            align(center + horizon, child),
-          )
-        })
+        block(
+          radius: 3pt,
+          stroke: luma(150),
+          inset: 8pt,
+          outset: 0pt,
+          spacing: 0pt,
+          above: 0pt,
+          below: 0pt,
+          height: 1.3em,
+          align(center + horizon, child),
+        )
       } else {
         child
       }
@@ -102,7 +97,8 @@
     inset: (_, row) => if row == 0 { (bottom: 2pt) } else { 4pt },
 
     ..inputs,
-    ..styled-children
+    ..styled-children,
+    columns: cols,
   )
 }
 

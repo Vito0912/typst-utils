@@ -69,6 +69,9 @@ def main():
 
     for typ_file in typ_files:
         typ_path = Path(typ_file)
+        out_files.append(typ_path)
+        continue
+        typ_path = Path(typ_file)
         rel_path = typ_path.relative_to(repo_root)
 
         output_file = export_dir / rel_path.with_suffix(".pdf")
