@@ -107,13 +107,13 @@
     })
     #if short != none {
       show: with-deck.with(short)
-      if subtitle != none {
+      if subtitle != none and subtitle.len() > 0 {
         heading(text(weight: "bold")[#subtitle #label(subtitle)])
       }
       body
       show: sources
     } else {
-      if subtitle != none {
+      if subtitle != none and subtitle.len() > 0 {
         heading(text(weight: "bold")[#subtitle #label(subtitle)])
       }
       body
