@@ -35,6 +35,15 @@
 }
 
 #let link-ref(target, text: none, show-page: true) = {
+  import "custom/typki/typki.typ": is-typki
+  if is-typki {
+    if (text != none) {
+      text
+    } else {
+      strong[Reference not in Documentation: #str(target)]
+    }
+    return
+  }
   context {
     let elements = query(target)
     if elements.len() == 1 {
