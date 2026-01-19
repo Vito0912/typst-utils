@@ -12,3 +12,4 @@
 #import "custom/terminal.typ": terminal
 #import "custom/cetz-custom.typ": plane, vector, vector-builder
 #import "custom/typki/typki.typ" as typki
+#import "custom/utils.typ": tb, tc, tg, tgray, to, tp, tr, ty
