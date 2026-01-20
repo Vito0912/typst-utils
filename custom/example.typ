@@ -147,6 +147,13 @@
       let auto-lbl = label("example-" + str(count))
       let auto-lbl-back = label("example-" + str(count) + "-back")
       let stroke-color = rgb("#aaaaaa79")
+      let back-target = query(auto-lbl-back)
+
+      let page-ref = if back-target.len() > 0 {
+        [ (p. #counter(page).at(back-target.first().location()).first())]
+      } else {
+        none
+      }
 
       [
         #show figure.where(kind: "example"): set block(breakable: true)
@@ -158,9 +165,14 @@
                 #underline([*#ex.text* (Beispiel #count)])
               ] else [#underline([*Beispiel #count*])]
               #h(1fr)
-              #link(
-                auto-lbl-back,
-              )[Zurück zur Referenz #sym.arrow.double.bl]]
+              #if back-target.len() > 0 {
+                link(
+                  auto-lbl-back,
+                )[Zurück zur Referenz #sym.arrow.double.bl #page-ref]
+              }
+            ]
+
+
             #ex.body
           ],
           stroke: stroke-color,
