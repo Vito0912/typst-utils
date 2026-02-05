@@ -85,12 +85,11 @@
         block(
           radius: 3pt,
           stroke: luma(150),
-          inset: 8pt,
+          inset: (x: 6pt, y: 4pt),
           outset: 0pt,
           spacing: 0pt,
           above: 0pt,
           below: 0pt,
-          height: 1.3em,
           align(center + horizon, child),
         )
       } else {
